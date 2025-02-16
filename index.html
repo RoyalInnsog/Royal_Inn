@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Inn Hotel - Booking</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f5f5f5; }
+        .container { width: 50%; margin: 50px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        select, input { width: 100%; padding: 8px; margin: 5px 0; }
+        button { background-color: navy; color: white; padding: 12px; border: none; cursor: pointer; width: 100%; border-radius: 5px; margin-top: 20px; }
+        button:hover { background-color: gold; color: black; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Book Your Stay at Royal Inn Hotel</h2>
+
+        <form id="bookingForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="aadhaar">Aadhaar Number:</label>
+            <input type="text" id="aadhaar" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+
+            <label for="departure">Departure City (Where from you came):</label>
+            <input type="text" id="departure" required>
+
+            <label for="destination">Destination City (Where to go):</label>
+            <input type="text" id="destination" required>
+
+            <label for="adults">Number of Adults:</label>
+            <select id="adults" onchange="updateChildren()">
+                <option value="1">1 Adult</option>
+                <option value="2">2 Adults</option>
+                <option value="3">3 Adults</option>
+            </select>
+
+            <label for="children">Number of Children:</label>
+            <select id="children">
+                <option value="0">0 Children</option>
+                <option value="1">1 Child</option>
+                <option value="2">2 Children</option>
+            </select>
+
+            <label for="checkin">Check-in Date:</label>
+            <input type="date" id="checkin" required>
+
+            <label for="checkout">Check-out Date:</label>
+            <input type="date" id="checkout" required>
+
+            <button type="button" onclick="proceedToPayment()">Proceed to Payment</button>
+        </form>
+    </div>
+
+    <script>
+        function updateChildren() {
+            var adults = document.getElementById("adults").value;
+            var children = document.getElementById("children");
+
+            if (adults == "3") {
+                children.value = "0"; // No children allowed with 3 adults
+                children.disabled = true;
+            } else {
+                children.disabled = false;
+            }
+        }
+
+        function proceedToPayment() {
+            var name = document.getElementById("name").value;
+            var aadhaar = document.getElementById("aadhaar").value;
+            var phone = document.getElementById("phone").value;
+            var address = document.getElementById("address").value;
+            var departure = document.getElementById("departure").value;
+            var destination = document.getElementById("destination").value;
+            var adults = document.getElementById("adults").value;
+            var children = document.getElementById("children").value;
+            var checkin = document.getElementById("checkin").value;
+            var checkout = document.getElementById("checkout").value;
+
+            if (name === "" || aadhaar === "" || phone === "" || address === "" || departure === "" || destination === "" || checkin === "" || checkout === "") {
+                alert("Please fill in all the details.");
+                return;
+            }
+
+            window.location.href = "payment.html?name=" + encodeURIComponent(name) + 
+                                   "&aadhaar=" + encodeURIComponent(aadhaar) + 
+                                   "&phone=" + encodeURIComponent(phone) + 
+                                   "&address=" + encodeURIComponent(address) + 
+                                   "&departure=" + encodeURIComponent(departure) + 
+                                   "&destination=" + encodeURIComponent(destination) + 
+                                   "&adults=" + adults + 
+                                   "&children=" + children + 
+                                   "&checkin=" + checkin + 
+                                   "&checkout=" + checkout;
+        }
+
+        document.getElementById("bookingForm").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+                let inputs = Array.from(document.querySelectorAll("input, select"));
+                let index = inputs.indexOf(document.activeElement);
+                if (index > -1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus(); // Move to next field
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

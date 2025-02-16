@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f5f5f5; }
+        .container { width: 50%; margin: 50px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; }
+        h2 { color: green; }
+        p { font-size: 18px; }
+        .home-btn { padding: 10px 20px; background-color: navy; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+        .home-btn:hover { background-color: darkblue; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Thank You for Your Booking!</h2>
+        <p>Your reservation has been successfully confirmed.</p>
+        <p>You will receive an email with further details shortly.</p>
+        <a href="index.html" class="home-btn">Return to Home</a>
+    </div>
+
+    <script>
+        fetch('send_email.php')  // Call PHP script to send email
+            .then(response => console.log("Email Sent"))
+            .catch(error => console.log("Email Error: ", error));
+    </script>
+
+</body>
+</html>
